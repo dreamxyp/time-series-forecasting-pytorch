@@ -10,7 +10,7 @@ def run_epoch(dataloader, is_training=False):
         if is_training:
             optimizer.zero_grad()
 
-        batchsize = x.shape[0]
+        batchSize = x.shape[0]
 
         x = x.to(config["training"]["device"])
         y = y.to(config["training"]["device"])
@@ -22,11 +22,12 @@ def run_epoch(dataloader, is_training=False):
             loss.backward()
             optimizer.step()
 
-        epoch_loss += (loss.detach().item() / batchsize)
+        epoch_loss += (loss.detach().item() / batchSize)
 
     lr = scheduler.get_last_lr()[0]
 
     return epoch_loss, lr
+
 
 train_dataloader = DataLoader(dataset_train, batch_size=config["training"]["batch_size"], shuffle=True)
 val_dataloader = DataLoader(dataset_val, batch_size=config["training"]["batch_size"], shuffle=True)
@@ -42,6 +43,6 @@ for epoch in range(config["training"]["num_epoch"]):
     loss_train, lr_train = run_epoch(train_dataloader, is_training=True)
     loss_val, lr_val = run_epoch(val_dataloader)
     scheduler.step()
-    
+
     print('Epoch[{}/{}] | loss train:{:.6f}, test:{:.6f} | lr:{:.6f}'
-              .format(epoch+1, config["training"]["num_epoch"], loss_train, loss_val, lr_train))
+          .format(epoch + 1, config["training"]["num_epoch"], loss_train, loss_val, lr_train))

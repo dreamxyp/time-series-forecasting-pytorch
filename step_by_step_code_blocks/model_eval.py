@@ -30,8 +30,8 @@ for idx, (x, y) in enumerate(val_dataloader):
 to_plot_data_y_train_pred = np.zeros(num_data_points)
 to_plot_data_y_val_pred = np.zeros(num_data_points)
 
-to_plot_data_y_train_pred[config["data"]["window_size"]:split_index+config["data"]["window_size"]] = scaler.inverse_transform(predicted_train)
-to_plot_data_y_val_pred[split_index+config["data"]["window_size"]:] = scaler.inverse_transform(predicted_val)
+to_plot_data_y_train_pred[config["data"]["window_size"]:split_index + config["data"]["window_size"]] = scaler.inverse_transform(predicted_train)
+to_plot_data_y_val_pred[split_index + config["data"]["window_size"]:] = scaler.inverse_transform(predicted_val)
 
 to_plot_data_y_train_pred = np.where(to_plot_data_y_train_pred == 0, None, to_plot_data_y_train_pred)
 to_plot_data_y_val_pred = np.where(to_plot_data_y_val_pred == 0, None, to_plot_data_y_val_pred)
@@ -44,8 +44,8 @@ plt.plot(data_date, data_close_price, label="Actual prices", color=config["plots
 plt.plot(data_date, to_plot_data_y_train_pred, label="Predicted prices (train)", color=config["plots"]["color_pred_train"])
 plt.plot(data_date, to_plot_data_y_val_pred, label="Predicted prices (validation)", color=config["plots"]["color_pred_val"])
 plt.title("Compare predicted prices to actual prices")
-xticks = [data_date[i] if ((i%config["plots"]["xticks_interval"]==0 and (num_data_points-i) > config["plots"]["xticks_interval"]) or i==num_data_points-1) else None for i in range(num_data_points)] # make x ticks nice
-x = np.arange(0,len(xticks))
+xticks = [data_date[i] if ((i % config["plots"]["xticks_interval"] == 0 and (num_data_points - i) > config["plots"]["xticks_interval"]) or i == num_data_points - 1) else None for i in range(num_data_points)]  # make x ticks nice
+x = np.arange(0, len(xticks))
 plt.xticks(x, xticks, rotation='vertical')
 plt.grid(b=None, which='major', axis='y', linestyle='--')
 plt.legend()
